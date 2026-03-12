@@ -12,8 +12,17 @@ from functions.Einheiten import (
     gramm_zu_kilogramm,
     kilogramm_zu_tonne,
 )
+from pathlib import Path
+import pandas as pd
+from datetime import datetime
 
 def show_conversion_page():
+    # Session State initialisieren
+    if "data_df" not in st.session_state:
+        st.session_state["data_df"] = pd.DataFrame(columns=[
+            "Datum", "Zeit", "Wert", "Von", "Nach", "Ergebnis"
+        ])
+
     st.title("Einheiten-Umrechner")
 
     st.header("Länge")
@@ -22,6 +31,19 @@ def show_conversion_page():
         result = umrechnen(meter)
         st.success(f"{meter} m = {result} cm")
         st.caption(f"{meter} Meter entsprechen {result} Zentimeter")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": meter,
+            "Von": "meter",
+            "Nach": "zentimeter",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     millimeter = st.number_input("Millimeter", min_value=0.0, step=0.1, key="mm")
@@ -29,6 +51,19 @@ def show_conversion_page():
         result = millimeter_zu_zentimeter(millimeter)
         st.success(f"{millimeter} mm = {result} cm")
         st.caption(f"{millimeter} Millimeter entsprechen {result} Zentimeter")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": millimeter,
+            "Von": "millimeter",
+            "Nach": "zentimeter",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     meter2 = st.number_input("Meter für Kilometer", min_value=0.0, step=0.1, key="m2")
@@ -36,6 +71,19 @@ def show_conversion_page():
         result = meter_zu_kilometer(meter2)
         st.success(f"{meter2} m = {result} km")
         st.caption(f"{meter2} Meter entsprechen {result} Kilometer")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": meter2,
+            "Von": "meter",
+            "Nach": "kilometer",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     st.header("Zeit")
@@ -44,6 +92,19 @@ def show_conversion_page():
         result = sekunden_zu_minuten(sek)
         st.success(f"{sek} s = {result:.2f} min")
         st.caption(f"{sek} Sekunden entsprechen {result:.2f} Minuten")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": sek,
+            "Von": "sekunden",
+            "Nach": "minuten",
+            "Ergebnis": round(result, 2)
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     min_ = st.number_input("Minuten", min_value=0.0, step=1.0, key="min")
@@ -51,6 +112,19 @@ def show_conversion_page():
         result = minuten_zu_stunden(min_)
         st.success(f"{min_} min = {result:.2f} h")
         st.caption(f"{min_} Minuten entsprechen {result:.2f} Stunden")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": min_,
+            "Von": "minuten",
+            "Nach": "stunden",
+            "Ergebnis": round(result, 2)
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     stunden = st.number_input("Stunden", min_value=0.0, step=1.0, key="h")
@@ -58,6 +132,19 @@ def show_conversion_page():
         result = stunden_zu_tage(stunden)
         st.success(f"{stunden} h = {result:.2f} Tage")
         st.caption(f"{stunden} Stunden entsprechen {result:.2f} Tagen")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": stunden,
+            "Von": "stunden",
+            "Nach": "tage",
+            "Ergebnis": round(result, 2)
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     tage = st.number_input("Tage", min_value=0.0, step=1.0, key="d")
@@ -65,6 +152,19 @@ def show_conversion_page():
         result = tage_zu_monate(tage)
         st.success(f"{tage} Tage = {result:.2f} Monate")
         st.caption(f"{tage} Tage entsprechen {result:.2f} Monaten")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": tage,
+            "Von": "tage",
+            "Nach": "monate",
+            "Ergebnis": round(result, 2)
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     monate = st.number_input("Monate", min_value=0.0, step=1.0, key="mth")
@@ -72,6 +172,19 @@ def show_conversion_page():
         result = monate_zu_jahre(monate)
         st.success(f"{monate} Monate = {result:.2f} Jahre")
         st.caption(f"{monate} Monate entsprechen {result:.2f} Jahren")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": monate,
+            "Von": "monate",
+            "Nach": "jahre",
+            "Ergebnis": round(result, 2)
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     st.header("Gewicht")
@@ -80,6 +193,19 @@ def show_conversion_page():
         result = milligramm_zu_gramm(mg)
         st.success(f"{mg} mg = {result} g")
         st.caption(f"{mg} Milligramm entsprechen {result} Gramm")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": mg,
+            "Von": "milligramm",
+            "Nach": "gramm",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     g = st.number_input("Gramm", min_value=0.0, step=1.0, key="g")
@@ -87,6 +213,19 @@ def show_conversion_page():
         result = gramm_zu_kilogramm(g)
         st.success(f"{g} g = {result} kg")
         st.caption(f"{g} Gramm entsprechen {result} Kilogramm")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": g,
+            "Von": "gramm",
+            "Nach": "kilogramm",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     kg = st.number_input("Kilogramm", min_value=0.0, step=0.1, key="kg")
@@ -94,6 +233,19 @@ def show_conversion_page():
         result = kilogramm_zu_tonne(kg)
         st.success(f"{kg} kg = {result} t")
         st.caption(f"{kg} Kilogramm entsprechen {result} Tonnen")
+        
+        result_row = {
+            "Datum": datetime.now().strftime("%d.%m.%Y"),
+            "Zeit": datetime.now().strftime("%H:%M:%S"),
+            "Wert": kg,
+            "Von": "kilogramm",
+            "Nach": "tonne",
+            "Ergebnis": result
+        }
+        st.session_state["data_df"] = pd.concat(
+            [st.session_state["data_df"], pd.DataFrame([result_row])],
+            ignore_index=True
+        )
         st.balloons()
 
     st.divider()
@@ -109,6 +261,11 @@ def show_conversion_page():
             st.balloons()
         else:
             st.warning("⚠️ Bitte vergebe erst Sterne, bevor du das Feedback absendest.")
+
+    st.divider()
+    st.subheader("Berechnungsverlauf")
+    st.caption("Alle bisherigen Umrechnungen werden hier angezeigt.")
+    st.dataframe(st.session_state["data_df"])
 
 if __name__ == "__main__":
     show_conversion_page()

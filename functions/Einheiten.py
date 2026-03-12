@@ -1,3 +1,5 @@
+from datetime import datetime
+import pytz
 def umrechnen(meter):
     """
     Rechnet Meter in Zentimeter um.
