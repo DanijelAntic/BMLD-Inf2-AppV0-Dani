@@ -15,6 +15,7 @@ from functions.Einheiten import (
 from pathlib import Path
 import pandas as pd
 from datetime import datetime
+from utils.data_manager import DataManager 
 
 def show_conversion_page():
     # Session State initialisieren
@@ -44,6 +45,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     millimeter = st.number_input("Millimeter", min_value=0.0, step=0.1, key="mm")
@@ -64,6 +67,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     meter2 = st.number_input("Meter für Kilometer", min_value=0.0, step=0.1, key="m2")
@@ -84,6 +89,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     st.header("Zeit")
@@ -105,6 +112,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     min_ = st.number_input("Minuten", min_value=0.0, step=1.0, key="min")
@@ -125,6 +134,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     stunden = st.number_input("Stunden", min_value=0.0, step=1.0, key="h")
@@ -145,6 +156,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     tage = st.number_input("Tage", min_value=0.0, step=1.0, key="d")
@@ -165,6 +178,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     monate = st.number_input("Monate", min_value=0.0, step=1.0, key="mth")
@@ -185,6 +200,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     st.header("Gewicht")
@@ -206,6 +223,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     g = st.number_input("Gramm", min_value=0.0, step=1.0, key="g")
@@ -226,6 +245,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     kg = st.number_input("Kilogramm", min_value=0.0, step=0.1, key="kg")
@@ -246,6 +267,8 @@ def show_conversion_page():
             [st.session_state["data_df"], pd.DataFrame([result_row])],
             ignore_index=True
         )
+        data_manager = DataManager()
+        data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
         st.balloons()
 
     st.divider()
