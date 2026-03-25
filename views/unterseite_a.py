@@ -289,6 +289,34 @@ def show_conversion_page():
     st.subheader("Berechnungsverlauf")
     st.caption("Alle bisherigen Umrechnungen werden hier angezeigt.")
     st.dataframe(st.session_state["data_df"])
+        # Grafik für Berechnungshäufigkeit pro Kategorie
+    if not st.session_state["data_df"].empty:
+        # Kategorien definieren
+        categories = {
+            'Länge': ['meter', 'millimeter', 'zentimeter', 'kilometer'],
+            'Zeit': ['sekunden', 'minuten', 'stunden', 'tage', 'monate', 'jahre'],
+            'Gewicht': ['milligramm', 'gramm', 'kilogramm', 'tonne']
+        }
+        
+        # Funktion, um Kategorie basierend auf "Von" zu bestimmen
+        def get_category(von):
+            for cat, units in categories.items():
+                if von in units:
+                    return cat
+            return 'Unbekannt'  # Fallback für nicht zugeordnete Einheiten
+        
+        # Neue Spalte "Kategorie" hinzufügen
+        st.session_state["data_df"]['Kategorie'] = st.session_state["data_df"]['Von'].apply(get_category)
+        
+        # Häufigkeit pro Kategorie zählen
+        category_counts = st.session_state["data_df"]['Kategorie'].value_counts().reset_index()
+        category_counts.columns = ['Kategorie', 'Anzahl']
+        
+        # Balkendiagramm anzeigen
+        st.subheader("📊 Häufigkeit der Berechnungen pro Kategorie")
+        st.bar_chart(category_counts.set_index('Kategorie'))
+    else:
+        st.info("Noch keine Berechnungen durchgeführt. Führe einige Umrechnungen durch, um die Grafik zu sehen.")
 
 if __name__ == "__main__":
     show_conversion_page()
